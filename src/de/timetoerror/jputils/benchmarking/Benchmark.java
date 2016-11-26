@@ -34,9 +34,7 @@ public class Benchmark {
     }
 
     /**
-     * Captures a benchmark. This process is running in the thread which calls
-     * this method, so this method will also pass time. For async benchmark use
-     * the asyncCapture(...) method
+     * Captures a benchmark.
      *
      * @param name
      */
@@ -44,14 +42,20 @@ public class Benchmark {
         captures.add(new BenchmarkStamp(name, System.nanoTime()));
     }
 
-    public void asyncCapture(String name) {
-
-    }
-
+    
+    /**
+     * Returns a captured BenchMarkStamps
+     * @return 
+     */
     public ArrayList<BenchmarkStamp> getCaptures() {
         return captures;
     }
 
+    
+    /**
+     * Gets all times of the captured stamps
+     * @return 
+     */
     public ArrayList<Long> getTimes() {
         ArrayList<Long> result = new ArrayList<>(captures.size());
 
@@ -62,6 +66,11 @@ public class Benchmark {
         return result;
     }
     
+    
+    /**
+     * Gets all differences beteen the captured times
+     * @return 
+     */
     public ArrayList<Long> getDiffs()
     {
         ArrayList<Long> result = new ArrayList<>(captures.size());
@@ -74,6 +83,10 @@ public class Benchmark {
         return result;
     }
     
+    
+    /**
+     * Prints the benchmark into the connected console of the application
+     */
     public void printBenchmark()
     {
         System.out.println("=== Benchmark " + title + " ===");

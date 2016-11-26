@@ -4,14 +4,18 @@
  */
 package de.timetoerror.jputils.img;
 
+import de.janroslan.jputils.math.MathUtils;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import javax.imageio.ImageIO;
 
 /**
@@ -98,20 +102,69 @@ public class ImageUtils {
 
         return 0xFF000000 | Red | Green | Blue; //0xFF000000 for 100% Alpha. Bitwise OR everything together.
     }
-    
-    
+
     /**
-     * 
+     *
      * @param imageData
-     * @return 
+     * @return
      */
     public static BufferedImage createImageFromBytes(byte[] imageData) {
-    ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
-    try {
-        return ImageIO.read(bais);
-    } catch (IOException e) {
-        throw new RuntimeException(e);
+        ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
+        try {
+            return ImageIO.read(bais);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-}
 
+    /**
+     * Creates a tile image of the given images. The output image is trying to
+     * be as quadratic as possible. If the count of the input images is prime
+     * (and so not dividble for a rectangular image) the ouput image will be in
+     * only one line
+     *
+     * @param files
+     * @return
+     */
+    public static BufferedImage tile(List<File> files) {
+        // The amount of rows & columns
+        int imgX = 0, imgY = 0;
+        BufferedImage result;
+
+        // Calculate tiling ratio
+        int[] ratio = MathUtils.equalSquare(files.size());
+        imgX = ratio[0];
+        imgY = ratio[1];
+
+        // Read images
+        BufferedImage[] images = new BufferedImage[files.size()];
+        int bigX = 0;
+        int bigY = 0;
+        for (int i = 0; i < images.length; i++) {
+
+            try {
+                images[i] = ImageIO.read(files.get(i));
+                if (images[i].getWidth() > bigX) {
+                    bigX = images[i].getWidth();
+                }
+                if (images[i].getHeight() > bigY) {
+                    bigY = images[i].getHeight();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return null;
+            }
+        }
+
+        // Writing new image
+        result = new BufferedImage(imgX * bigX, imgY * bigY, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = result.getGraphics();
+        for (int i = 0; i < images.length; i++) {
+            int x = i % imgX;
+            int y = i / imgX;
+            g.drawImage(images[i], x * bigX, y * bigY, null);
+        }
+
+        return result;
+    }
 }

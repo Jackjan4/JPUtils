@@ -10,45 +10,47 @@ import java.io.File;
  *
  * @author Jackjan
  */
-public class CommonUtils
-{
+public class CommonUtils {
 
     public static final String OS_WINDOWS = "windows";
-    public static final String OS_MAC = "wac";
+    public static final String OS_MAC = "mac";
     public static final String OS_LINUX = "linux";
+    public static final String OS_UNIX = "unix";
 
     /**
      * Prints out the OS the application is running on as String
-     * "windows", "linux", "mac"
      *
-     * @return
+     *
+     * @return - "windows", "linux", "mac", "unix"
      */
     public static String getOS() {
         String str = System.getProperty("os.name");
 
         if (str.contains("win") || str.contains("Win")) {
             return "windows";
-        } else if (str.contains("nix") || str.contains("nux")) {
+        } else if (str.contains("nux")) {
             return "linux";
-        } else if (str.contains("Mac")) {
+        } else if (str.contains("nix")) {
+            return "unix";
+        } else if (str.contains("Mac") || str.contains("mac")) {
             return "mac";
         }
         return null;
     }
-    
 
     /**
-     * Returns the application path as String if possible
+     * Returns the class path on the harddisk as String, if possible
      *
-     * @param c The method needs a context to be executed. 
-     * To prevent the need of an instance of CommonUtils a class can be given to get its path.
-     * Please notice that the the method returns the folder on the hard disk of the class, so
-     * if your class 'c' is inside the lib folderv for example, the returned path will link to this!
-     * It is recommend to use the main class of the application.
+     * @param c The method needs a context to be executed. To prevent the need
+     * of an instance of CommonUtils a class can be given to get its path.
+     * Please notice that the the method returns the folder on the hard disk of
+     * the class, so if your class 'c' is inside the lib folder for example, the
+     * returned path will link to this! It is recommend to use the main class of
+     * the application to get the application path
      * @return The absolute path of the class as String or null if the
      * SecurityManager blocks the access
      */
-    public static String getAppPath(Class c) {
+    public static String getClassPath(Class c) {
         String result;
         try {
             result = c.getProtectionDomain().getCodeSource().getLocation().getPath();
@@ -59,14 +61,14 @@ public class CommonUtils
     }
 
     /**
-     * Returns the application path as File if possible
+     * Returns the cass path as File, if possible
      *
      * @param c - The method needs a context to be executed. To prevent the need
      * of an instance of CommonUtils a class can be
      * @return
      */
-    public static File getAppPathAsFile(Class c) {
-        String res = getAppPath(c);
+    public static File getClassPathAsFile(Class c) {
+        String res = getClassPath(c);
         if (res != null) {
             return new File(res);
         } else {

@@ -4,7 +4,6 @@
  */
 package de.timetoerror.jputils;
 
-import de.timetoerror.jputils.collections.ArrayUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -20,6 +19,12 @@ public class StringUtils
     public final static Character[] QWERTZ = {'Y', 'y','Z','z', '_', '-'};
     public final static Character[] QWERTY = {'Z', 'z','Y','y', '/', 'ß',};
 
+    
+    /**
+     * Scans a string for integers via RegEx.
+     * @param source
+     * @return 
+     */
     public static List<Integer> scanforIntegers(String source) {
         final ArrayList<Integer> result = new ArrayList<>();
 
@@ -30,7 +35,23 @@ public class StringUtils
         }
         return result;
     }
+    
+    
+    /**
+     * Scans a string for integers via per-character-evaluation.
+     * @param source
+     * @return 
+     */
+    public static List<Integer> scanforIntegers2(String source) {
+        return null;
+    }
 
+    
+    /**
+     * Scans a string for first integer occurence via RegEx.
+     * @param source
+     * @return 
+     */
     public static int scanForFirstInteger(String source)
     {
         final ArrayList<Integer> result = new ArrayList<>();
@@ -52,10 +73,10 @@ public class StringUtils
      * @param count
      * @return
      */
-    public static String leftfillTo(String filler, Object ex, int count) {
-        StringBuilder builder = new StringBuilder(ex.toString());
+    public static String leftfillTo(String filler, String ex, int count) {
+        StringBuilder builder = new StringBuilder(ex);
         
-        // Using reverse to append because insert() would call System.arrayCopy() everytime
+        // Using reverse to append because StringBuilder.insert() would call System.arrayCopy() everytime
         builder.reverse();
         while (builder.length() != count) {
             builder.append(filler);

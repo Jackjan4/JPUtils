@@ -6,8 +6,10 @@ package de.timetoerror.jputils.collections;
 import java.util.Iterator;
 
 /**
- *
+ * A stack that overflows if its full. "Overflows" means in this context that
+ * the stack is again beginning at the start and is overwriting old entries so on.
  * @author Jackjan
+ * @param <T>
  */
 public class OverflowStack<T> implements Iterable<T> {
 
@@ -20,8 +22,8 @@ public class OverflowStack<T> implements Iterable<T> {
     }
 
     public void add(T obj) {
-        buffer[pos] = obj;
-        inc();
+        buffer[inc()] = obj;
+
     }
 
     public T pop() {
@@ -32,7 +34,11 @@ public class OverflowStack<T> implements Iterable<T> {
     }
 
     public T peek() {
-        return (T) buffer[pos - 1];
+        if (pos != 0) {
+            return (T) buffer[pos - 1];
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -53,11 +59,11 @@ public class OverflowStack<T> implements Iterable<T> {
 
     // Decrements the pointer
     private int dec() {
-        // Lower ende
+        // Lower end
         if (pos == 0) {
             pos = buffer.length - 1;
         } else {
-            pos++;
+            pos--;
         }
         return pos;
     }
@@ -72,19 +78,20 @@ public class OverflowStack<T> implements Iterable<T> {
         }
 
     }
-    
+
     /**
      * Returns the capacity
-     * @return 
+     *
+     * @return
      */
-    public int getSize()
-    {
+    public int getSize() {
         return buffer.length;
     }
 
     /**
      * Returns the iterator
-     * @return 
+     *
+     * @return
      */
     @Override
     public Iterator<T> iterator() {
@@ -99,7 +106,7 @@ public class OverflowStack<T> implements Iterable<T> {
                 return pop();
             }
         };
-        
+
         return it;
     }
 }

@@ -14,7 +14,7 @@ public class LinuxUtils
 {
 
     /**
-     * Gives the specific user access to the given folder.
+     * Gives the specific user ownage to the given folder.
      * Can only be used if the application was started in "sudo"
      * Is mostly useful when Java is running as sudo on Linux and the normal
      * user has to access the folder (e.g. Raspberry Pi)
@@ -25,7 +25,7 @@ public class LinuxUtils
      * @return - Indicates if the operation was successfull. It is not
      * sucessfull when the OS is not Linux or an IOException occured.
      */
-    public static boolean giveUserAccess(String user, String path) {
+    public static boolean giveUserOwn(String user, String path) {
         // Standardnutzer auf Linux Rechte auf den Ordner geben
         if (CommonUtils.getOS().equals(CommonUtils.OS_LINUX)) {
             try {

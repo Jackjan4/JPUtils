@@ -9,10 +9,19 @@ package de.timetoerror.jputils.collections;
  */
 public class ArrayUtils {
 
+    /**
+     * Clears an object array
+     *
+     * @param array
+     */
     public static void clearArray(Object[] array) {
-
+        for (int i = 0; i < array.length; i++) {
+            array[i] = null;
+        }
     }
 
+    
+    // Clears a byte array
     public static void clearByteArray(byte[] array) {
         for (int i = 0; i < array.length; i++) {
             array[i] = 0;

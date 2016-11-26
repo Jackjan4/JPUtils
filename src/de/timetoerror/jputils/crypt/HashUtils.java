@@ -48,11 +48,12 @@ public class HashUtils
         return result;
     }
 
+    
     /**
-     * 
+     * Gets the hash of an input byte array with the specified hashing algorithm
      * @param input
      * @param algo
-     * @return 
+     * @return The hash result as String in hex
      */
     public static String hash(byte[] input, String algo) {
         String result = null;

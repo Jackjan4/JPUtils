@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -18,8 +17,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.DrawMode;
@@ -31,71 +28,121 @@ import sun.awt.image.IntegerComponentRaster;
 
 /**
  * Utility methods for JavaFX applications
+ *
  * @author Jackjan
  */
-public class FXUtils
-{
+public class FXUtils {
 
     /**
-     * Opens a new stage with a given view. Returns the view-controller for further interaction or null if no controller is available for the window.
+     * Opens a new stage with a given view. Returns the view-controller for
+     * further interaction or null if no controller is available for the window.
      *
+     * @param <T>
      * @param fxmlPath - The path to the .FXML file
      * @param stylesheet - The path for the CSS stylesheet file
      * @param title - The title of the window if the system uses a window system
      * @param pStage - The stage on which the window should be displayed
-     * @param icon - The icon of the window (and taskbar) when the system uses a window system
+     * @param icon - The icon of the window (and taskbar) when the system uses a
+     * window system
+     * @param style
+     * @return 
      */
-    public static <T> T openWindow(URL fxmlPath, String stylesheet, String title, Stage pStage, String icon) {
+    public static <T> T openWindow(URL fxmlPath, String stylesheet, String title, Stage pStage, String icon, StageStyle style) {
 
+        
+        // Call unload from old controller to make last executes
+        
         // Set stage
         Stage stage;
         if (pStage == null) {
             stage = new Stage();
+            stage.centerOnScreen();
         } else {
             stage = pStage;
         }
-        stage.centerOnScreen();
 
         // If icon available, set it
         if (icon != null) {
             stage.getIcons().add(new Image(icon));
         }
-        
-        
+
         // Creating the window
         FXMLLoader loader = null;
         try {
+            // Load FXML
             String path = fxmlPath.toExternalForm();
             URL url = new URL(path);
-
             loader = new FXMLLoader(url);
             Parent root = (Parent) loader.load();
-            stage.initStyle(StageStyle.DECORATED);
-            stage.setResizable(false);
+            
+            // Set StageStyle
+            if (pStage == null && style != null)
+            {
+                stage.initStyle(style);
+            }
 
             Scene scene = new Scene(root);
+            
+            // Execute stylesheet on new window
             if (stylesheet != null && !stylesheet.equals("")) {
                 scene.getStylesheets().add(stylesheet);
             }
 
-            // Ctrl+C will exit the programm
-            scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-                if (key.getCode() == KeyCode.C && key.isControlDown()) {
-                    Platform.exit();
-                }
-            });
-
+            // Show scene
             stage.setScene(scene);
             stage.setTitle(title);
-            stage.show();
+
+            if (pStage == null) {
+                stage.show();
+            }
 
         } catch (IOException ex) {
             System.out.println("Error: FXML could not be opened: " + fxmlPath);
         }
 
+        // Use AdvancedController (JPUtils) features if available
+        if (loader.getController() != null && loader.getController() instanceof AdvancedController) {
+            ((AdvancedController) loader.getController()).onInitFinished();
+        }
+
         return loader.getController();
     }
 
+    
+    
+    /**
+     * Opens a new stage with a given view. Returns the view-controller for
+     * further interaction or null if no controller is available for the window.
+     *
+     * @param fxmlPath - The path to the .FXML file
+     * @param stylesheet - The path for the CSS stylesheet file
+     * @param title - The title of the window if the system uses a window system
+     * @param pStage - The stage on which the window should be displayed
+     * @param icon - The icon of the window (and taskbar) when the system uses a
+     * window system
+     */
+    public static <T> T openWindow(URL fxmlPath, String stylesheet, String title, Stage pStage, String icon) {
+
+        return openWindow(fxmlPath, stylesheet, title, pStage, icon, null);
+    }
+    
+    /**
+     * Opens a new stage with a given view. Returns the view-controller for
+     * further interaction or null if no controller is available for the window.
+     *
+     * @param <T>
+     * @param fxmlPath - The path to the .FXML file
+     * @param stylesheet - The path for the CSS stylesheet file
+     * @param title - The title of the window if the system uses a window system
+     * @param pStage - The stage on which the window should be displayed
+     * @return 
+     */
+    public static <T> T openWindow(URL fxmlPath, String stylesheet, String title, Stage pStage) {
+
+        return openWindow(fxmlPath, stylesheet, title, pStage, null, null);
+    }
+    
+    
     /**
      * Converts a BufferedImage to an JavaFX Image
      *
@@ -149,12 +196,13 @@ public class FXUtils
 
         return result;
     }
-    
+
     /**
-     * Is used for the getAllChildren(...) method.
-     * Returns all children of a node by calling itself recursivly for every parent node
+     * Is used for the getAllChildren(...) method. Returns all children of a
+     * node by calling itself recursivly for every parent node
+     *
      * @param result
-     * @param parent 
+     * @param parent
      */
     private static void getChildren(ArrayList<Node> result, Parent parent) {
         result.addAll(parent.getChildrenUnmodifiable());
@@ -165,15 +213,14 @@ public class FXUtils
             }
         }
     }
-    
-    private static MeshView createTile2D(int length, Image texture)
-    {
-       TriangleMesh triMesh = new TriangleMesh();
+
+    private static MeshView createTile2D(int length, Image texture) {
+        TriangleMesh triMesh = new TriangleMesh();
         triMesh.getTexCoords().addAll(
-        0,0,
-        0,1,
-        1,1,
-        1,0);
+                0, 0,
+                0, 1,
+                1, 1,
+                1, 0);
 
         triMesh.getPoints().addAll(
                 0, 0, 0, // 0
@@ -190,7 +237,7 @@ public class FXUtils
         PhongMaterial mat = new PhongMaterial(Color.WHITE);
         mat.setDiffuseMap(texture);
         meshView.setMaterial(mat);
-        
-       return meshView;
+
+        return meshView;
     }
 }

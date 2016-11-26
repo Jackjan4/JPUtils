@@ -7,56 +7,31 @@ package de.timetoerror.jputils.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Jackjan
  */
-public class MySQLDB implements SQLDB
-{
+public class MySQLDB extends SQLDB {
 
-    private static MySQLDB db;
-    private Connection conn;
-
-    public MySQLDB(String driverPath) {
-        try {
-            Class.forName(driverPath);
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Error: MySQL Driver could not be loaded");
-        }
+    public MySQLDB(String hostName, int port, String dbName, String username, String pass) {
+        super(hostName, port, dbName, username, pass);
     }
 
     @Override
-    public void connect(String hostname, int port, String dbname, String username, String pass) {
+    public Connection getSeperateConnection() {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + dbname, username, pass);
+            return DriverManager.getConnection("jdbc:mysql://" + getHostName() + ":"
+                    + getPort() + "/" + getDbName() + "?" + "user=" + getUsername() + "&"
+                    + "password=" + getPass());
         } catch (SQLException ex) {
-            conn = null;
-            System.out.println("Error: Could not connect to MySQL database");
+            Logger.getLogger(MySQLDB.class.getName()).log(Level.SEVERE, null, ex);
+            
+            return null;
         }
     }
-
-    public static SQLDB getInstance(String driver) {
-        if (db == null) {
-            db = new MySQLDB(driver);
-        }
-
-        return db;
-    }
-
-    @Override
-    public PreparedStatement getStatement(String sql) {
-        PreparedStatement result = null;
-        try {
-            result = conn.prepareStatement(sql);
-        } catch (SQLException ex) {
-            System.out.println("Error: ");
-        }
-        
-        return result;
-    }
-
 
 }

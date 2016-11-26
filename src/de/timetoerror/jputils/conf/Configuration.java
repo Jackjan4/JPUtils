@@ -1,7 +1,3 @@
-/*
- * ConstruViewer
- * Copyright 2016, Jan-Philipp Roslan, Alle Rechte vorbehalten
- */
 package de.timetoerror.jputils.conf;
 
 import java.io.File;
@@ -17,7 +13,7 @@ import de.timetoerror.jputils.CommonUtils;
 /**
  * A single, self-managing configuration file (config.cfg) which you can use to
  * save configuration information between application sessions.
- *
+ * TODO: Common interface with ConfigurationFile with abstract interface AppConfiguration
  * @author Jackjan
  * @version: 0.9 (26.4.2016 00:40)
  */

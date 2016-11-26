@@ -18,31 +18,7 @@ import javafx.stage.Window;
 public class FileUtils
 {
 
-    // Erstellung eines neuen JFileChoosers
-    FileChooser chooser;
-
-    //Indikator
-    int i;
-
     public FileUtils() {
-        chooser = new FileChooser();
-        chooser.setInitialDirectory(new java.io.File("."));
-    }
-
-    public void setFileChooserFilter(String description, String... extensions) {
-        ExtensionFilter filter = new ExtensionFilter(description, extensions);
-        chooser.setSelectedExtensionFilter(filter);
-    }
-
-    /**
-     *
-     * @param w
-     * @return
-     */
-    public File openFileChooser(Window w) {
-        File result = chooser.showOpenDialog(w);
-
-        return result;
     }
 
     // Speichert eine Datei in ein String-Array ein und gibt diesen zurück
@@ -116,7 +92,7 @@ public class FileUtils
     }
 
     // Speichert eine Datei in ein String-Array ein und gibt diesen zurück
-    public static ArrayList<String> readFileLines2(File filePath) {
+    public static ArrayList<String> readFileLines(File filePath) {
 
         if (!filePath.exists()) {
             return null;

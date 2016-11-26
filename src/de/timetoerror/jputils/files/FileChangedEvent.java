@@ -16,6 +16,7 @@ public class FileChangedEvent
     
     public FileChangedEvent(File f, FileStatus s)
     {
+        
         file = f;
         status = s;
     }

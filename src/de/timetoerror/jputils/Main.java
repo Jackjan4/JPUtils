@@ -1,6 +1,6 @@
 package de.timetoerror.jputils;
 
-import de.timetoerror.jputils.refl.ReflectionUtils;
+import de.timetoerror.jputils.reflection.ReflectionUtils;
 import java.io.File;
 
 /**

@@ -13,7 +13,7 @@ import java.util.Properties;
 
 /**
  *
- *
+ * * TODO: Common interface with ConfigurationFile with abstract interface AppConfiguration
  * @author Jackjan
  * @version: 0.9 (26.4.2016 00:40)
  */

@@ -31,8 +31,6 @@ public class FileCreateWatcher extends FileWatcher
                 fireChangeEvent(FileStatus.CREATED);
                 exists = true;
             }
-            
-            System.out.println("println");
         
     }
 }
