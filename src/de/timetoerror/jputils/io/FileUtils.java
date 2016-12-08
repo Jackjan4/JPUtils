@@ -2,36 +2,17 @@ package de.timetoerror.jputils.io;
 
 import java.io.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javafx.collections.ObservableList;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Window;
 
 /**
  * @author Jackjan FileUtils.java stellt Methoden bereit um ein
  * Swing-JFileChooser zu öffnen und eine ausgwählte Datei aus diesem auszulesen
  */
-public class FileUtils
-{
+public class FileUtils {
 
     public FileUtils() {
-    }
-
-    // Speichert eine Datei in ein String-Array ein und gibt diesen zurück
-    public static ArrayList<String> readFileLines(String filePath) {
-
-        try (FileReader reader = new FileReader((new File(filePath)))){
-            return readAllLines(reader);
-        } catch (FileNotFoundException ex) {
-            System.out.println("");
-            return null;
-        } catch (IOException ex) {
-            return null;
-        }
     }
 
     /**
@@ -62,8 +43,7 @@ public class FileUtils
      * @return
      */
     public static ArrayList<String> readAllLines(byte[] file) {
-        
-        
+
         return readAllLines(new InputStreamReader(new ByteArrayInputStream(file)));
     }
 
@@ -91,23 +71,6 @@ public class FileUtils
         return lines;
     }
 
-    // Speichert eine Datei in ein String-Array ein und gibt diesen zurück
-    public static ArrayList<String> readFileLines(File filePath) {
-
-        if (!filePath.exists()) {
-            return null;
-        }
-
-        try (FileReader r = new FileReader(filePath)){
-            return readAllLines(new FileReader(filePath));
-        } catch (FileNotFoundException ex) {
-            System.out.println("Error: FileNotFoundException occured while reading all lines of a file: " + filePath.getAbsolutePath());
-            return null;
-        } catch (IOException ex) {
-            return null;
-        }
-    }
-
     /**
      * Returns the files inside a folder with a given ending
      *
@@ -116,23 +79,28 @@ public class FileUtils
      * @return
      */
     public static ArrayList<File> getFilesInFolder(File path, String... endings) {
-        ArrayList<File> files = new ArrayList<>();
+        ArrayList<File> result = new ArrayList<>();
 
-        for (File file : path.listFiles()) {
-            if (file.isFile()) {
-                int i = file.getName().lastIndexOf('.');
-                if (i > 0) {
-                    for (String s : endings) {
-                        if (file.getName().substring(i).equals(s)) {
-                            files.add(file);
-                            break;
+        File[] files = path.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    int i = file.getName().lastIndexOf('.');
+                    if (i > 0) {
+                        for (String s : endings) {
+                            if (file.getName().substring(i).equals(s)) {
+                                result.add(file);
+                                break;
+                            }
                         }
                     }
                 }
             }
+            
+            
         }
-        Collections.sort(files);
-        return files;
+        Collections.sort(result);
+        return result;
     }
 
     /**
@@ -159,28 +127,9 @@ public class FileUtils
                 bw.write(t.getText());
                 bw.newLine();
             }
-            
-        } catch (IOException ex) {
-            
-        }
-    }
 
-    /**
-     *
-     * @param f
-     * @param list
-     * @return
-     */
-    public static boolean writeAllLines(File f, List<String> list) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(f))) {
-            Pattern m = Pattern.compile("(\r)|(\n)");
-            for (String s : list) {
-                bw.write(m.matcher(s).replaceAll(""));
-                bw.newLine();
-            }
         } catch (IOException ex) {
-            return false;
+            
         }
-        return true;
     }
 }

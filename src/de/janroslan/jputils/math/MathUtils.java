@@ -69,9 +69,8 @@ public class MathUtils {
      */
     public static boolean isSquare(int number) {
         double root = Math.sqrt(number);
-        int intRoot = (int) root;
 
-        return Math.pow(intRoot, 2) == number;
+        return root % 1 == 0.0;
     }
 
     

@@ -12,6 +12,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -26,21 +29,22 @@ public class ZipUtils {
      * where the ZIP relies
      *
      * @param zip
-     * @return 
+     * @param outputFolder
+     * @return
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static File extractZip(File zip) throws FileNotFoundException, IOException {
+    public static Path extractZip(Path zip, Path outputFolder) throws FileNotFoundException, IOException {
 
         // Destination directory
-        File destDir = new File(zip.getParent() + File.separator + "zip-output");
+        Path destDir = outputFolder;
 
         // Create destination if not existent
-        if (!destDir.exists()) {
-            destDir.mkdirs();
+        if (!Files.exists(destDir)) {
+            Files.createDirectories(destDir);
         }
 
-        try (ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zip)))) {
+        try (ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zip.toFile())))) {
 
             // Get all zip entries (folders and files)
             ZipEntry ze = zis.getNextEntry();
@@ -72,7 +76,12 @@ public class ZipUtils {
             zis.closeEntry();
             zis.close();
         }
-        
+
         return destDir;
     }
+
+    public static Path extractZip(Path zip) throws FileNotFoundException, IOException {
+        return extractZip(zip, Paths.get(zip.getParent() + File.separator + "zip-output"));
+    }
+
 }

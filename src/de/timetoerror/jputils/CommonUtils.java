@@ -39,7 +39,7 @@ public class CommonUtils {
     }
 
     /**
-     * Returns the class path on the harddisk as String, if possible
+     * Returns the class path on the harddisk as String
      *
      * @param c The method needs a context to be executed. To prevent the need
      * of an instance of CommonUtils a class can be given to get its path.
@@ -47,21 +47,18 @@ public class CommonUtils {
      * the class, so if your class 'c' is inside the lib folder for example, the
      * returned path will link to this! It is recommend to use the main class of
      * the application to get the application path
-     * @return The absolute path of the class as String or null if the
-     * SecurityManager blocks the access
+     * @return The absolute path of the class as String
      */
     public static String getClassPath(Class c) {
         String result;
-        try {
-            result = c.getProtectionDomain().getCodeSource().getLocation().getPath();
-        } catch (SecurityException ex) {
-            return null;
-        }
+        
+        result = c.getProtectionDomain().getCodeSource().getLocation().getPath();
+        
         return result;
     }
 
     /**
-     * Returns the cass path as File, if possible
+     * Returns the cass path as File
      *
      * @param c - The method needs a context to be executed. To prevent the need
      * of an instance of CommonUtils a class can be

@@ -9,7 +9,7 @@ package de.janroslan.jputils.session;
  *
  * @author jackjan
  */
-public class Session {
+public abstract class Session {
     
     private String name;
 

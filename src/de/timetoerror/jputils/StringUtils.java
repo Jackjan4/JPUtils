@@ -36,17 +36,6 @@ public class StringUtils
         return result;
     }
     
-    
-    /**
-     * Scans a string for integers via per-character-evaluation.
-     * @param source
-     * @return 
-     */
-    public static List<Integer> scanforIntegers2(String source) {
-        return null;
-    }
-
-    
     /**
      * Scans a string for first integer occurence via RegEx.
      * @param source
@@ -70,7 +59,7 @@ public class StringUtils
      *
      * @param filler
      * @param ex
-     * @param count
+     * @param count - The count of chars the string should have at the end
      * @return
      */
     public static String leftfillTo(String filler, String ex, int count) {

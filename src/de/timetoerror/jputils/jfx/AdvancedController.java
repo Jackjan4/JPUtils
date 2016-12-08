@@ -16,5 +16,5 @@ public interface AdvancedController {
     /**
      * Gets called when this controller is about to be unloaded.
      */
-    public void unload();
+    public void onUnload();
 }

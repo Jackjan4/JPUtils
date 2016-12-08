@@ -24,7 +24,7 @@ public class AnimUtils {
     public static void hFadeOut(Node n, double x, Duration d, EventHandler handler) {
         TranslateTransition tT = new TranslateTransition(d, n);
         tT.setToX(x);
-
+      
         FadeTransition ft = new FadeTransition(d, n);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
