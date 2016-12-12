@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -45,13 +47,11 @@ public class FXUtils {
      * @param icon - The icon of the window (and taskbar) when the system uses a
      * window system
      * @param style
-     * @return 
+     * @return
      */
     public static <T> T openWindow(URL fxmlPath, String stylesheet, String title, Stage pStage, String icon, StageStyle style) {
 
-        
         // Call unload from old controller to make last executes
-        
         // Set stage
         Stage stage;
         if (pStage == null) {
@@ -74,15 +74,14 @@ public class FXUtils {
             URL url = new URL(path);
             loader = new FXMLLoader(url);
             Parent root = (Parent) loader.load();
-            
+
             // Set StageStyle
-            if (pStage == null && style != null)
-            {
+            if (pStage == null && style != null) {
                 stage.initStyle(style);
             }
 
             Scene scene = new Scene(root);
-            
+
             // Execute stylesheet on new window
             if (stylesheet != null && !stylesheet.equals("")) {
                 scene.getStylesheets().add(stylesheet);
@@ -92,7 +91,7 @@ public class FXUtils {
             stage.setScene(scene);
             stage.setTitle(title);
 
-            if (pStage == null) {
+            if (pStage == null || !pStage.isShowing()) {
                 stage.show();
             }
 
@@ -108,8 +107,24 @@ public class FXUtils {
         return loader.getController();
     }
 
-    
-    
+    public static Parent loadFXML(URL fxmlPath) {
+        Parent result = null;
+        FXMLLoader loader = new FXMLLoader(fxmlPath);
+
+        try {
+            result = (Parent) loader.load();
+            // Use AdvancedController (JPUtils) features if available
+            if (loader.getController() != null && loader.getController() instanceof AdvancedController) {
+                ((AdvancedController) loader.getController()).onInitFinished();
+            }
+            
+        } catch (IOException ex) {
+
+        }
+
+        return result;
+    }
+
     /**
      * Opens a new stage with a given view. Returns the view-controller for
      * further interaction or null if no controller is available for the window.
@@ -125,7 +140,7 @@ public class FXUtils {
 
         return openWindow(fxmlPath, stylesheet, title, pStage, icon, null);
     }
-    
+
     /**
      * Opens a new stage with a given view. Returns the view-controller for
      * further interaction or null if no controller is available for the window.
@@ -135,14 +150,13 @@ public class FXUtils {
      * @param stylesheet - The path for the CSS stylesheet file
      * @param title - The title of the window if the system uses a window system
      * @param pStage - The stage on which the window should be displayed
-     * @return 
+     * @return
      */
     public static <T> T openWindow(URL fxmlPath, String stylesheet, String title, Stage pStage) {
 
         return openWindow(fxmlPath, stylesheet, title, pStage, null, null);
     }
-    
-    
+
     /**
      * Converts a BufferedImage to an JavaFX Image
      *

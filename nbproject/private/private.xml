@@ -2,25 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/janroslan/jputils/math/MathUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/CommonUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/jfx/AdvancedController.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/io/ZipUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/jfx/animation/AnimUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/reflection/JarUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/crypt/HashUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/jfx/FXUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/janroslan/jputils/logging/LoggerUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/janroslan/jputils/session/SessionManager.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/io/DynamicByteBuffer.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/db/MySQLDB.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/reflection/ReflectionUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/io/FileUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/os/LinuxUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/janroslan/jputils/session/Session.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/StringUtils.java</file>
-            <file>file:/media/jackjan/Externe/Dev/Programs/Java/JPUtils/src/de/timetoerror/jputils/db/SQLDB.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
