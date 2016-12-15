@@ -4,50 +4,53 @@
  */
 package de.timetoerror.jputils.conf;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Properties;
 
 /**
  *
- * * TODO: Common interface with ConfigurationFile with abstract interface AppConfiguration
+ * * TODO: Common interface with ConfigurationFile with abstract interface
+ * AppConfiguration
+ *
  * @author Jackjan
  * @version: 0.9 (26.4.2016 00:40)
  */
-public class ConfigurationFile
-{
+public class ConfigurationFile {
 
-    private File file;
+    private Path file;
+
     private Properties config;
     private String comments;
 
     /**
      * Creates and loads a configuration with a given name in the given
-     * directory
-     * If the configuration file does not exist in the given folder a new, blank
-     * file will be created
+     * directory If the configuration file does not exist in the given folder a
+     * new, blank file will be created
      *
      * @param file
      * @param comments
      */
-    public ConfigurationFile(File file, String comments) {
+    public ConfigurationFile(Path file, String comments) {
         this.file = file;
         this.comments = comments;
         config = new Properties();
 
-        if (file.exists()) {
-            try (FileInputStream fis = new FileInputStream(file)) {
-                config.load(fis);
-            } catch (IOException ex) {
-                System.out.println("Error: IOexception while reading a config.cfg (Constructor)");
-            }
+        if (Files.exists(file)) {
+            
+            // Read config and load props into the 'config'-Field
+            readConfig();
         } else {
-            file.getParentFile().mkdirs();
+
+            // Create file if not existent
             try {
-                file.createNewFile();
+                Files.createDirectories(file.getParent());
+                Files.createFile(file);
             } catch (IOException ex) {
                 System.out.println("Error: IOException while creating a new config.cfg");
             }
@@ -75,6 +78,27 @@ public class ConfigurationFile
         writeConfig();
         return true;
     }
+    
+    public Properties getInternalProperties()
+    {
+        return config;
+    }
+
+    protected void changeFile(Path file) {
+        this.file = file;
+
+        readConfig();
+    }
+    
+    private void readConfig()
+    {
+        // Reload config
+        try (InputStream fis = Files.newInputStream(file, StandardOpenOption.CREATE)) {
+            config.load(fis);
+        } catch (IOException ex) {
+            System.out.println("Error: IOexception while reading a config.cfg (Constructor)");
+        }
+    }
 
     /**
      *
@@ -90,7 +114,7 @@ public class ConfigurationFile
      * @return Returns a boolean that indicates if the operation was successfull
      */
     private boolean writeConfig() {
-        try (FileOutputStream os = new FileOutputStream(file)) {
+        try (OutputStream os = Files.newOutputStream(file)) {
             config.store(os, comments);
         } catch (FileNotFoundException ex) {
             System.out.println("A Configuration file could not be found while writing to it");

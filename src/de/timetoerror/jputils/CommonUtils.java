@@ -47,18 +47,17 @@ public class CommonUtils {
      * the class, so if your class 'c' is inside the lib folder for example, the
      * returned path will link to this! It is recommend to use the main class of
      * the application to get the application path
-     * @return The absolute path of the class as String
+     * @return The absolute path of the .jar the class is inside as String
      */
     public static String getClassPath(Class c) {
         String result;
         
         result = c.getProtectionDomain().getCodeSource().getLocation().getPath();
-        
         return result;
     }
 
     /**
-     * Returns the cass path as File
+     * Returns the .jar path in which the class is inside as File
      *
      * @param c - The method needs a context to be executed. To prevent the need
      * of an instance of CommonUtils a class can be
