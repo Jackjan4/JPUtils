@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.timetoerror.jputils.jfx;
+package de.janroslan.jputils.jfx;
 
 /**
  * Wrapper around the FXMLLoader to add more functionalities to it.

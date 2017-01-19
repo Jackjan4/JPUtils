@@ -53,7 +53,7 @@ public class JarUtils {
         return result;
     }
     
-    public static void copyOutOfThisJar(Class c, String content, File dest) {
+    public static void copyOutOfJar(Class c, String content, File dest) {
         BufferedInputStream iStream = new BufferedInputStream(c.getResourceAsStream(content));
         
         if (!dest.exists()) {

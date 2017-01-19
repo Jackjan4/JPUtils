@@ -11,6 +11,8 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.MalformedURLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,36 +35,39 @@ public class ReflectionUtils {
             System.out.println("Error:");
         }
         return null;
-    }
 
-    
-    
+    }
 
     /**
      * Calls a method inside the specified class
-     * 
+     *
      * @param c
      * @param method
      * @param instance
      * @param types
      * @param args
-     * @return - The return object of ormally, null if the method does not have a return value
-     * @throws java.lang.NoSuchMethodException
+     * @return - The return object of ormally, null if the method does not have
+     * a return value
      * @throws java.lang.IllegalAccessException
      * @throws java.lang.reflect.InvocationTargetException
      */
-    public static Object callMethod(Class c, String method, Object instance, Class[] types, Object... args) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public static Object callMethod(Class c, String method, Object instance, Class[] types, Object... args) throws Exception {
         Object result = null;
 
-        Method m = c.getDeclaredMethod(method, types);
-        m.setAccessible(true);
-        result = m.invoke(instance, args);
+        try {
+            Method m = c.getDeclaredMethod(method, types);
+            m.setAccessible(true);
 
+            result = m.invoke(instance, args);
+        } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | SecurityException | InvocationTargetException ex) {
+            throw ex;
+        }
         return result;
     }
 
     /**
-     * Injects a value into a field 
+     * Injects a value into a field
+     *
      * @param c - The class
      * @param name The name of the field
      * @param instance - The instance of the class

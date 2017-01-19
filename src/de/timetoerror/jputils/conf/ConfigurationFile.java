@@ -4,6 +4,7 @@
  */
 package de.timetoerror.jputils.conf;
 
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Properties;
+
 
 /**
  *
@@ -23,10 +25,12 @@ import java.util.Properties;
  */
 public class ConfigurationFile {
 
+
     private Path file;
 
     private Properties config;
     private String comments;
+
 
     /**
      * Creates and loads a configuration with a given name in the given
@@ -42,7 +46,7 @@ public class ConfigurationFile {
         config = new Properties();
 
         if (Files.exists(file)) {
-            
+
             // Read config and load props into the 'config'-Field
             readConfig();
         } else {
@@ -57,6 +61,7 @@ public class ConfigurationFile {
         }
     }
 
+
     /**
      * Returns the value of a given key inside the configuration file
      *
@@ -67,31 +72,34 @@ public class ConfigurationFile {
         return config.getProperty(name);
     }
 
+
     public boolean setKey(String key, String value) {
         config.setProperty(key, value);
         writeConfig();
         return true;
     }
 
+
     public boolean deleteKey(String key) {
         config.remove(key);
         writeConfig();
         return true;
     }
-    
-    public Properties getInternalProperties()
-    {
+
+
+    public Properties getInternalProperties() {
         return config;
     }
+
 
     protected void changeFile(Path file) {
         this.file = file;
 
         readConfig();
     }
-    
-    private void readConfig()
-    {
+
+
+    private void readConfig() {
         // Reload config
         try (InputStream fis = Files.newInputStream(file, StandardOpenOption.CREATE)) {
             config.load(fis);
@@ -100,14 +108,30 @@ public class ConfigurationFile {
         }
     }
 
+
     /**
+     * Returns true if the key exists inside the config. If the value of the key
+     * is set to "", it also exists (and returns true).
      *
      * @param key
-     * @return
+     * @return - true if the key exists, false if not
      */
     public boolean keyExists(String key) {
+        return !(getKey(key) == null);
+    }
+
+
+    /**
+     * Returns true if the key exists inside the config and has a value other
+     * than "".
+     *
+     * @param key
+     * @return - true if the key exists with a given value, false if not
+     */
+    public boolean keyAvailable(String key) {
         return !(getKey(key) == null || getKey(key).equals(""));
     }
+
 
     /**
      *
@@ -124,5 +148,24 @@ public class ConfigurationFile {
             return false;
         }
         return true;
+    }
+
+
+    public Path getFile() {
+        return file;
+    }
+
+
+    public String getFileName() {
+        return file.getFileName().toString();
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    public boolean isEmpty() {
+        return config.isEmpty();
     }
 }

@@ -8,8 +8,7 @@ import java.nio.file.Paths;
 
 /**
  * A single, self-managing configuration file (config.cfg) which you can use to
- * save configuration information between application sessions. TODO: Common
- * interface with ConfigurationFile with abstract interface AppConfiguration
+ * save configuration information between application sessions.
  *
  * @author Jackjan
  * @version: 0.9 (26.4.2016 00:40)
@@ -37,7 +36,7 @@ public class Configuration extends ConfigurationFile {
 
     private static Path returnPath(boolean os) {
         String s;
-        s = Configuration.class.getProtectionDomain().getCodeSource().getLocation().toString();
+        s = CommonUtils.getClassPathAsFile(Configuration.class).getParent();
 
         if (os) {
             s += File.separator + "config" + File.separator + "config_" + CommonUtils.getOS() + ".cfg";

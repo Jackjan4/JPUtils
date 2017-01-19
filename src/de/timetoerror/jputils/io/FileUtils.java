@@ -1,10 +1,15 @@
 package de.timetoerror.jputils.io;
 
+
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
 import javafx.collections.ObservableList;
 import javafx.scene.text.Text;
+
 
 /**
  * @author Jackjan FileUtils.java stellt Methoden bereit um ein
@@ -12,8 +17,10 @@ import javafx.scene.text.Text;
  */
 public class FileUtils {
 
+
     public FileUtils() {
     }
+
 
     /**
      * Deletes a directory with also deleting the subfolders with their items
@@ -34,6 +41,7 @@ public class FileUtils {
         return dir.delete(); // The directory is empty now or is a file and can be deleted.
     }
 
+
     /**
      * Reads all lines from a file which is available as its byte-Array
      * representation
@@ -46,6 +54,7 @@ public class FileUtils {
 
         return readAllLines(new InputStreamReader(new ByteArrayInputStream(file)));
     }
+
 
     private static ArrayList<String> readAllLines(Reader r) {
         ArrayList<String> lines = new ArrayList<>();
@@ -70,6 +79,7 @@ public class FileUtils {
 
         return lines;
     }
+
 
     /**
      * Returns the files inside a folder with a given ending
@@ -96,12 +106,12 @@ public class FileUtils {
                     }
                 }
             }
-            
-            
+
         }
         Collections.sort(result);
         return result;
     }
+
 
     /**
      *
@@ -121,6 +131,7 @@ public class FileUtils {
         return result;
     }
 
+
     public static void writeAllLines(File f, ObservableList<Text> list) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(f))) {
             for (Text t : list) {
@@ -129,7 +140,22 @@ public class FileUtils {
             }
 
         } catch (IOException ex) {
-            
+
+        }
+    }
+
+
+    /**
+     *
+     * @param p
+     * @return
+     */
+    public static Path getFileNameWithoutExt(Path p) {
+        if (Files.isRegularFile(p)) {
+            String fileName = p.getFileName().toString();
+            return Paths.get(fileName.substring(0, fileName.lastIndexOf(".")));
+        } else {
+            return p;
         }
     }
 }
