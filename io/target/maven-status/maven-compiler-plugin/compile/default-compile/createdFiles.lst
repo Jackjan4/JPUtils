@@ -1,0 +1,12 @@
+de\janroslan\jputils\io\files\FileStatus.class
+de\janroslan\jputils\io\files\FileWatcher.class
+de\janroslan\jputils\io\files\FileUtils.class
+module-info.class
+de\janroslan\jputils\io\DynamicByteBuffer.class
+de\janroslan\jputils\io\files\FileChangedEvent.class
+de\janroslan\jputils\io\FileUtils.class
+de\janroslan\jputils\io\files\FileDeleteWatcher.class
+de\janroslan\jputils\io\ZipUtils.class
+de\janroslan\jputils\io\files\FileChangeListener.class
+de\janroslan\jputils\io\files\FileModifyWatcher.class
+de\janroslan\jputils\io\files\FileCreateWatcher.class
