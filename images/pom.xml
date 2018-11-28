@@ -8,12 +8,11 @@
     <parent>
         <groupId>de.janroslan</groupId>
         <artifactId>jputils</artifactId>
-        <version>0.5</version>
+        <version>${projectversion}</version>
     </parent>
 
     <groupId>de.janroslan</groupId>
-    <artifactId>images</artifactId>
-    <version>0.5</version>
+    <artifactId>jputils-images</artifactId>
 
     <dependencies>
         <dependency>

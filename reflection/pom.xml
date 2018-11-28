@@ -7,12 +7,12 @@
     <parent>
         <groupId>de.janroslan</groupId>
         <artifactId>jputils</artifactId>
-        <version>0.5</version>
+        <version>${projectversion}</version>
     </parent>
 
     <groupId>de.janroslan</groupId>
-    <artifactId>reflection</artifactId>
-    <version>0.5</version>
+    <artifactId>jputils-reflection</artifactId>
+
 
     
 </project>

@@ -13,12 +13,25 @@ import java.sql.SQLException;
  */
 public class SQLiteDB extends SQLDB {
 
+
+
+    /**
+     * Creates a new SQLiteDB instance with the given hostname and db name
+     * @param hostName
+     * @param dbName
+     */
     public SQLiteDB(String hostName, String dbName) {
         super(hostName, dbName);
     }
 
+
+
+    /**
+     * Connects to the initiated db
+     * @return
+     */
     @Override
-    public Connection getSeperateConnection() {
+    public Connection getSeparateConnection() {
         try {
             return DriverManager.getConnection("jdbc:sqlite:" + getHostName() + getDbName());
         } catch (SQLException ex) {

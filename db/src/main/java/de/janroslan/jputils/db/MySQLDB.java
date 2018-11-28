@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Jackjan
  */
 public class MySQLDB extends SQLDB {
@@ -21,15 +20,19 @@ public class MySQLDB extends SQLDB {
         super(hostName, port, dbName, username, pass);
     }
 
+
+    /**
+     * @return
+     */
     @Override
-    public Connection getSeperateConnection() {
+    public Connection getSeparateConnection() {
         try {
             return DriverManager.getConnection("jdbc:mysql://" + getHostName() + ":"
                     + getPort() + "/" + getDbName() + "?" + "user=" + getUsername() + "&"
                     + "password=" + getPass());
         } catch (SQLException ex) {
             Logger.getLogger(MySQLDB.class.getName()).log(Level.SEVERE, null, ex);
-            
+
             return null;
         }
     }

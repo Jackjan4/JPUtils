@@ -7,8 +7,9 @@
     <parent>
         <artifactId>jputils</artifactId>
         <groupId>de.janroslan</groupId>
-        <version>0.5</version>
+        <version>${projectversion}</version>
     </parent>
+
 
     <properties>
         <maven.version>3.6.0</maven.version>
@@ -19,7 +20,38 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.janroslan.jputils</groupId>
-    <artifactId>io</artifactId>
+    <artifactId>jputils-io</artifactId>
+    <packaging>jar</packaging>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <outputDirectory>${basedir}/target/</outputDirectory>
+                    <archive>
+                        <manifest>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <compilerArgs>
+
+                    </compilerArgs>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

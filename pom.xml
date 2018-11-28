@@ -7,7 +7,7 @@
     <groupId>de.janroslan</groupId>
     <artifactId>jputils</artifactId>
     <packaging>pom</packaging>
-    <version>0.5</version>
+    <version>${projectversion}</version>
 
 
     <modules>
@@ -23,6 +23,7 @@
         <module>javafx</module>
         <module>db</module>
         <module>images</module>
+        <module>threading</module>
     </modules>
 
     <properties>
@@ -30,6 +31,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jdk.version>11</jdk.version>
+        <projectversion>0.6</projectversion>
     </properties>
 
     <build>
@@ -43,7 +45,39 @@
                     <target>11</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <outputDirectory>target</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
         </plugins>
     </build>
+
+
+
+    <!-- THIS IS ONLY FOR JCENTER UPLOAD - SHOULD NOT BE USED IN EG. CLONING THE PROJECT -->
+    <distributionManagement>
+        <repository>
+            <id>bintray-jr-JPUtils</id>
+            <name>jr-JPUtils</name>
+            <url>https://api.bintray.com/maven/jr/JPUtils/JPUtils/;publish=1</url>
+        </repository>
+    </distributionManagement>
 
 </project>

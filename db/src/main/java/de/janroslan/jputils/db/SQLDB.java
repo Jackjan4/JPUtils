@@ -9,13 +9,17 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jackjan
+ * @author Jan-Philipp Roslan
  */
 public abstract class SQLDB {
+
+
 
     private enum DBMode {
         SQLite, MySQL
     };
+
+
 
     private String hostName;
     private String dbName;
@@ -25,7 +29,17 @@ public abstract class SQLDB {
     private DBMode mode;
     private boolean init;
 
-    public SQLDB(String hostName, int port, String dbName, String username, String pass) {
+
+
+    /**
+     *
+     * @param hostName
+     * @param port
+     * @param dbName
+     * @param username
+     * @param pass
+     */
+    protected SQLDB(String hostName, int port, String dbName, String username, String pass) {
         this.hostName = hostName;
         this.dbName = dbName;
         this.port = port;
@@ -35,13 +49,21 @@ public abstract class SQLDB {
         init = false;
     }
 
-    public SQLDB(String hostName, String dbName) {
+
+    /**
+     *
+     * @param hostName
+     * @param dbName
+     */
+    protected SQLDB(String hostName, String dbName) {
         this.hostName = hostName;
 
         this.dbName = dbName;
         mode = DBMode.SQLite;
         init = false;
     }
+
+
 
     /**
      * Initializes the given JDBC driver and creates a test connection to the
@@ -61,7 +83,7 @@ public abstract class SQLDB {
         }
 
         // Test connection
-        Connection c = getSeperateConnection();
+        Connection c = getSeparateConnection();
         if (c != null) {
             try {
                 c.close();
@@ -74,16 +96,24 @@ public abstract class SQLDB {
         return false;
     }
 
-    public abstract Connection getSeperateConnection();
+
+
+    /**
+     *
+     * @return
+     */
+    public abstract Connection getSeparateConnection();
+
+
 
     /**
      * Executes an Update in a seperate connection
      *
      * @param sql
      */
-    public int execUnpreparedUpdateSeperate(String sql) {
+    public int execUnpreparedUpdateSeparate(String sql) {
         try {
-            Connection c = getSeperateConnection();
+            Connection c = getSeparateConnection();
 
             Statement stmt = c.createStatement();
             int i = stmt.executeUpdate(sql);
@@ -94,6 +124,8 @@ public abstract class SQLDB {
             return -1;
         }
     }
+
+
 
     /**
      * Executes a Query in a seperate connection The returned ResultSet MUST be
@@ -106,7 +138,7 @@ public abstract class SQLDB {
         ArrayList<ArrayList<Object>> result = new ArrayList<>();
 
         try {
-            Connection c = getSeperateConnection();
+            Connection c = getSeparateConnection();
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             ResultSetMetaData meta = rs.getMetaData();
@@ -127,15 +159,26 @@ public abstract class SQLDB {
         }
     }
 
+
+
+    /**
+     *
+     * @param sql
+     * @param objs
+     * @param types
+     * @return
+     */
     public PreparedStatement prepareUpdateSeperate(String sql, Object[] objs, int... types) {
 
         try {
-            Connection c = getSeperateConnection();
+            Connection c = getSeparateConnection();
             return c.prepareStatement(sql);
         } catch (SQLException ex) {
             return null;
         }
     }
+
+
 
     /**
      *
@@ -158,6 +201,8 @@ public abstract class SQLDB {
         }
     }
 
+
+
     /**
      *
      * @param sql
@@ -167,7 +212,7 @@ public abstract class SQLDB {
     public void execPreparedUpdateSeperate(String sql, Object[] objs, int... types) {
 
         try {
-            Connection c = getSeperateConnection();
+            Connection c = getSeparateConnection();
             PreparedStatement stmt = c.prepareStatement(sql);
 
             for (int i = 0; i < objs.length; i++) {
@@ -182,6 +227,8 @@ public abstract class SQLDB {
         }
     }
 
+
+
     /**
      *
      * @param sql
@@ -192,7 +239,7 @@ public abstract class SQLDB {
     public ArrayList<ArrayList<Object>> execPreparedQuerySeperate(String sql, Object[] objs, int... types) {
         ArrayList<ArrayList<Object>> result = new ArrayList<>();
         try {
-        Connection c = getSeperateConnection();
+        Connection c = getSeparateConnection();
             PreparedStatement stmt = c.prepareStatement(sql);
 
             
@@ -230,6 +277,8 @@ public abstract class SQLDB {
     public void connectionPool() {
 
     }
+
+
 
     // ###  Getters & Setters ###
     public String getHostName() {
