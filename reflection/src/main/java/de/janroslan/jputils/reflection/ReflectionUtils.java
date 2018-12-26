@@ -5,6 +5,7 @@
  */
 package de.janroslan.jputils.reflection;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -66,21 +67,45 @@ public class ReflectionUtils {
     /**
      * Injects a value into a field
      *
-     * @param c - The class
      * @param name The name of the field
      * @param instance - The instance of the class
      * @param value - The value of the field
      * @return - Returns true if everything was sucessfull, false if not
      */
-    public static boolean injectField(Class c, String name, Object instance, Object value) {
+    public static boolean injectField(Object instance, String name,  Object value) {
         try {
-            Field f = c.getDeclaredField(name);
+            Field f = instance.getClass().getDeclaredField(name);
             f.setAccessible(true);
             f.set(instance, value);
             return true;
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
 
         }
+        return false;
+    }
+
+    public static boolean hasAnnotation(Field f, String annotationName) {
+
+        Annotation[] annots = f.getDeclaredAnnotations();
+        for(Annotation a : annots) {
+            String aName = a.annotationType().getSimpleName();
+            if (aName.equals(annotationName)) {
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
+    public static boolean isPrimiteOrWrapper(Object obj) {
+        Class c = obj.getClass();
+
+        if (c == int.class || c == double.class || c == float.class || c == byte.class
+        || c == Integer.class || c == Double.class || c == Float.class) {
+            return true;
+        }
+
         return false;
     }
 

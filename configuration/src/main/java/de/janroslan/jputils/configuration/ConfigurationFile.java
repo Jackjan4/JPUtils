@@ -45,6 +45,7 @@ public class ConfigurationFile {
         this.comments = comments;
         config = new Properties();
 
+
         if (Files.exists(file)) {
 
             // Read config and load props into the 'config'-Field
@@ -73,7 +74,9 @@ public class ConfigurationFile {
     }
     
     public String getKey(String name, String defaultVal) {
-        return (config.getProperty(name) == null) ? defaultVal : config.getProperty(name);
+        String result = config.getProperty(name);
+
+        return (result == null) ? defaultVal : result;
     }
 
 

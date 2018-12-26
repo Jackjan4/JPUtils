@@ -10,21 +10,13 @@ package de.janroslan.jputils.collections;
 public class ArrayUtils {
 
     /**
-     * Clears an object array
+     * Clears an array
      *
      * @param array
      */
-    public static void clearArray(Object[] array) {
+    public static <T> void clearArray(T[] array) {
         for (int i = 0; i < array.length; i++) {
             array[i] = null;
-        }
-    }
-
-    
-    // Clears a byte array
-    public static void clearByteArray(byte[] array) {
-        for (int i = 0; i < array.length; i++) {
-            array[i] = 0;
         }
     }
 }
